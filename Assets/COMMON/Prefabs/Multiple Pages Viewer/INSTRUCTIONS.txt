@@ -1,0 +1,8 @@
+Cannot keep many pages,it's not dynamically allocated.
+
+For maximmum 6 pages,at default size(480 W / 640 H)
+
+
+
+
+

@@ -1,0 +1,37 @@
+Presentation layer: Model - View - Controller
+
+Data layer: Data repositories - Data access layer
+
+Business layer: Domain logic - Application logic
+
+Presentation Layer
+{
+	View
+}
+
+Data Layer
+{
+	Adapter
+	{
+		Controller/Presenter1(bound to one view)
+		Controller/Presenter2(bound to another view)
+		...
+	}
+
+}
+
+Business layer
+{//Contains the model
+
+	1. Business Logic (uses :)
+
+	2. Binder(can be a "service")
+	{
+		Uses abstractions to get data
+	}
+
+	3. Data (internal data or nothing)
+}
+
+
+

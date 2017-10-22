@@ -1,0 +1,32 @@
+ROCK-SOLID MODULES/COMPONENTS/PREFABS/CONTROLS
+
+Rating :
+
+* Buggy
+* Unstable
+* Weak
+* Normal
+* Good
+* Stable
+* Very Stable
+* ROCK-SOLID
+
+
+WHOLE PROJECT STABILITY -> Very Stable
+
+
+"COMMON" :
+
+Prefabs :
+
+Menu Button -> Normal
+Menu Panel -> Stable on Portrait,WEAK on landscape
+Circular Item -> ROCK-SOLID
+Multiple pages Viewer -> Very stable on Portrait,WEAK on landscape,BUGGY on very small sizes(240 x 320 for example)
+
+"Scripts" :
+
+MenuItem -> ROCK-SOLID
+
+
+
