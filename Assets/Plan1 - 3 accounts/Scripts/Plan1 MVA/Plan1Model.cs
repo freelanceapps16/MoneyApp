@@ -61,6 +61,14 @@ public class Plan1XmlData : Plan1Data
         CurrencyName = xData.currencyName;
         CurrencyAmount = xData.currencyAmount;
         
+        if(xData.accounts.Count == 4)
+        {
+            NecesarryAccount.ResetToValueOf(xData.accounts[0]);
+            ShoppingsAccount.ResetToValueOf(xData.accounts[1]);
+            CirculationAccount.ResetToValueOf(xData.accounts[2]);
+            AllAccounts.ResetToValueOf(xData.accounts[3]);
+
+        }
     }
 
     //To put data in the MainXmlData object,from our class
@@ -69,7 +77,7 @@ public class Plan1XmlData : Plan1Data
         xData.currencyName = CurrencyName;
         xData.currencyAmount = CurrencyAmount;
 
-        XmlAccount testAcc = new XmlAccount(10, 300);
+        XmlAccount testAcc = new XmlAccount();
         
         XmlTransaction testTrans = new XmlTransaction();
         testTrans.amount = 1;
@@ -83,6 +91,19 @@ public class Plan1XmlData : Plan1Data
         xData.accounts.Add(testAcc);
         xData.accounts.Add(testAcc);
         xData.accounts.Add(testAcc);
+
+        //testAcc.transactions.Clear();
+        xData.accounts.Add(testAcc);
+    }
+
+    public void XmlAccountToPlan1Account(XmlAccount xAccount, ref Plan1Account plan1Account)
+    {
+
+    }
+
+    public void Plan1AccountToXmlAccount(Plan1Account plan1Account, ref XmlAccount xAccount)
+    {
+
     }
 
 }

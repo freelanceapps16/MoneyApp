@@ -46,16 +46,19 @@ public class Transaction
     public DateTime DateTime
     {
         get { return dateTime; }
+        set { if (value != null) dateTime = value; }
     }
 
     public string Description
     {
         get { return description; }
+        set { transactionType = value; }
     }
 
     public long ID
     {
         get { return id; }
+        set { id = value; }
     }
 
     #endregion
@@ -66,7 +69,7 @@ public class Transaction
         amount = 0.0f;
     }
 
-    public Transaction(string transactionType = "none", float amount = 0.0f)
+    public Transaction(string transactionType, float amount)
     {
         this.transactionType = transactionType;
         this.amount = amount;
@@ -105,11 +108,11 @@ public class Account
             return accountMoney;
         }
 
-        //set
-        //{
-        //    if (value > 0)
-        //        accountMoney = value;
-        //}
+        set
+        {
+            if (value > 0)
+                accountMoney = value;
+        }
     }
 
     public int AccountPercent
@@ -119,11 +122,17 @@ public class Account
             return accountPercent;
         }
 
+        set
+        {
+            if (value > 0)
+                accountMoney = value;
+        }
     }
 
     public List<Transaction> Transactions
     {
         get { return transactions; }
+        set { if (value != null) transactions = value; }
     }
 
     public void ResetTo(int percentFrom, float totalMoney)
@@ -147,6 +156,40 @@ public class Plan1Account : Account
     public Plan1Account(int percentFrom, float totalMoney) : base(percentFrom, totalMoney)
     {
 
+    }
+
+    public void ResetToValueOf(AppXmlCommon.XmlAccount xAccount)
+    {
+        AccountMoney = xAccount.accountMoney;
+        AccountPercent = xAccount.accountPercent;
+
+        Transactions.Clear();
+        List<Transaction> tmpTransactions = new List<Transaction>();
+
+        foreach(AppXmlCommon.XmlTransaction xTransaction in xAccount.transactions)
+        {
+            tmpTransactions.Add(TransactionFromXmlTransaction(xTransaction));
+        }
+
+        Transactions = tmpTransactions;
+    }
+
+    private Transaction TransactionFromXmlTransaction(AppXmlCommon.XmlTransaction xTransaction)
+    {
+        Transaction tmp = new Transaction();
+
+        tmp.TransactionType = xTransaction.transactionType;
+        tmp.Amount = xTransaction.amount;
+        tmp.Description = xTransaction.description;
+        tmp.ID = xTransaction.id;
+
+        TimeSpan time = TimeSpan.FromMilliseconds(xTransaction.dateTime);
+        DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        result.Add(time);
+
+        tmp.DateTime = result;
+
+        return tmp;
     }
 
 }
