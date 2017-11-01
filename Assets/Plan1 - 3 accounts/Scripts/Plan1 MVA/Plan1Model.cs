@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AppXmlCommon;
 
 public class Plan1MySqlData : Plan1Data
 {
@@ -28,23 +29,62 @@ public class Plan1XmlData : Plan1Data
 {
     //One of the possible data sources.
     private string xmlPath;
+    private MainXmlData xData;
 
     public Plan1XmlData(string xmlPath) : base("Money", 0.0f)
     {
         this.xmlPath = xmlPath;
-        LoadXmlData();
+        xData = new MainXmlData();
     }
 
     public Plan1XmlData(string currencyName, float totalAmount, string xmlPath):base(currencyName, totalAmount)
     {
         this.xmlPath = xmlPath;
-        LoadXmlData();
+        xData = new MainXmlData();
     }
 
-    private void LoadXmlData()
+    public override void Refresh()
     {
-
+        XmlDataHandler.LoadDataFromFile(xmlPath, ref xData);
+        XmlToInternalData();
     }
+
+    public override void Save()
+    {
+        InternalDataToXml();
+        XmlDataHandler.SaveDataToFile(xmlPath, ref xData);
+    }
+
+    //To put data in our class,from the MainXmlData object
+    private void XmlToInternalData()
+    {
+        CurrencyName = xData.currencyName;
+        CurrencyAmount = xData.currencyAmount;
+        
+    }
+
+    //To put data in the MainXmlData object,from our class
+    private void InternalDataToXml()
+    {
+        xData.currencyName = CurrencyName;
+        xData.currencyAmount = CurrencyAmount;
+
+        XmlAccount testAcc = new XmlAccount(10, 300);
+        
+        XmlTransaction testTrans = new XmlTransaction();
+        testTrans.amount = 1;
+        testTrans.description = "NO_DESCRIPTION";
+        testTrans.transactionType = "none";
+        testTrans.id = 345127;
+
+        testAcc.transactions.Add(testTrans);
+        testAcc.transactions.Add(testTrans);
+
+        xData.accounts.Add(testAcc);
+        xData.accounts.Add(testAcc);
+        xData.accounts.Add(testAcc);
+    }
+
 }
 
 public class Plan1DataWrapper

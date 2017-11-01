@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//TEMPORARY FOR TEST PURPOSE :
+using AppXmlCommon;
+
 public class ConcreteModel : MonoBehaviour
 {
     public Plan1ModelWrapper API = null;
@@ -8,7 +11,8 @@ public class ConcreteModel : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        API = new Plan1ModelWrapper(PreferedDataProvider.XmlDataProvider, "XML_LOCATION");
+        string xmlLocation = System.IO.Path.Combine(Application.streamingAssetsPath, "User1Data.xml");
+        API = new Plan1ModelWrapper(PreferedDataProvider.XmlDataProvider, xmlLocation);
 
         API.DataWrapper.LocalData.CurrencyName = "Coco";
         API.DataWrapper.LocalData.CurrencyAmount = 10000;
@@ -22,4 +26,14 @@ public class ConcreteModel : MonoBehaviour
     {
 	
 	}
+
+    public void TestWriteXml()
+    {
+        API.DataWrapper.LocalData.Save();
+    }
+
+    public void TestReadXml()
+    {
+        API.DataWrapper.LocalData.Refresh();
+    }
 }

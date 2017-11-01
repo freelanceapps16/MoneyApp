@@ -17,20 +17,13 @@ public enum PreferedDataProvider
     //and so on
 }
 
-public enum TransactionType
-{
-    None,
-    Income,
-    Spending
-}
-
 /// <summary>
 /// Common : Generic Application Transaction definition
 /// </summary>
 
 public class Transaction
 {
-    TransactionType transactionType;
+    string transactionType;// "none" / "income" / "spending"
     float amount;
     DateTime dateTime;
     string description;
@@ -38,10 +31,10 @@ public class Transaction
 
     #region Method Properties
 
-    public TransactionType TransactionType
+    public string TransactionType
     {
         get { return transactionType; }
-        set { if (value != TransactionType.None) { transactionType = value; } }
+        set { if (value != "none") { transactionType = value; } }
     }
 
     public float Amount
@@ -69,11 +62,11 @@ public class Transaction
 
     public Transaction()
     {
-        transactionType = TransactionType.None;
+        transactionType = "none";
         amount = 0.0f;
     }
 
-    public Transaction(TransactionType transactionType = TransactionType.None, float amount = 0.0f)
+    public Transaction(string transactionType = "none", float amount = 0.0f)
     {
         this.transactionType = transactionType;
         this.amount = amount;
@@ -222,6 +215,17 @@ public class Plan1Data
     protected Plan1Data()
     {
         
+    }
+
+    public virtual void Refresh()
+    {
+
+    }
+    
+
+    public virtual void Save()
+    {
+
     }
 
     public Plan1Data(string currencyName = "Money", float totalAmount = 0.0f)
