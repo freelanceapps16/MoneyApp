@@ -4,6 +4,8 @@ using System;
 
 #region Common definitions (global namespace)
 
+
+
 /// <summary>
 /// Common : Data provider enumeration
 /// </summary>
@@ -29,12 +31,23 @@ public class Transaction
     string description;
     long id;
 
+    private static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
     #region Method Properties
 
     public string TransactionType
     {
         get { return transactionType; }
-        set { if (value != "none") { transactionType = value; } }
+        set { if (value != "none")
+              {
+                    transactionType = value;
+              }
+              else
+              {
+                transactionType = "none"; 
+              }
+                
+            }
     }
 
     public float Amount
@@ -52,7 +65,7 @@ public class Transaction
     public string Description
     {
         get { return description; }
-        set { transactionType = value; }
+        set { description = value; }
     }
 
     public long ID
@@ -67,14 +80,24 @@ public class Transaction
     {
         transactionType = "none";
         amount = 0.0f;
+        description = "";
+        id = 0;
+        dateTime = DateTime.Now;
     }
 
     public Transaction(string transactionType, float amount)
     {
         this.transactionType = transactionType;
         this.amount = amount;
+        description = "";
+        id = 0;
+        dateTime = DateTime.Now;
     }
 
+    public static DateTime DateTimeFromUnixTime(long unixTime)
+    {
+        return epoch.AddSeconds(unixTime);
+    }
 }
 
 /// <summary>
@@ -140,6 +163,7 @@ public class Account
         accountMoney = (totalMoney * accountPercent) / 100;
         accountPercent = percentFrom;
     }
+
 }
 
 /// <summary>
@@ -182,12 +206,7 @@ public class Plan1Account : Account
         tmp.Amount = xTransaction.amount;
         tmp.Description = xTransaction.description;
         tmp.ID = xTransaction.id;
-
-        TimeSpan time = TimeSpan.FromMilliseconds(xTransaction.dateTime);
-        DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        result.Add(time);
-
-        tmp.DateTime = result;
+        tmp.DateTime = Transaction.DateTimeFromUnixTime(xTransaction.dateTime);
 
         return tmp;
     }
