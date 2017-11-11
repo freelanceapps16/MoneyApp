@@ -226,8 +226,9 @@ public class Plan1Data
 
     string currencyName;
     float currencyAmount;
+    int lastTransactionID = 0;
 
-#region Properties for private variables
+    #region Properties for private variables
 
     public Plan1Account NecesarryAccount
     {
@@ -271,7 +272,20 @@ public class Plan1Data
             
             }
     }
-#endregion
+
+    public int LastTransactionID
+    {
+        get
+        {
+            return lastTransactionID;
+        }
+
+        set
+        {
+            lastTransactionID = value;
+        }
+    }
+    #endregion
 
     //NOT used preferably. Protected to allow inheritance
     protected Plan1Data()

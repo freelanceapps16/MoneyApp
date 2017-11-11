@@ -34,16 +34,12 @@ public class ConcreteModel : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        string xmlLocation = System.IO.Path.Combine(Application.streamingAssetsPath, "User1Data.xml");
-
-        
-
         API.Instance.DataWrapper.LocalData.CurrencyName = "Coco";
         API.Instance.DataWrapper.LocalData.CurrencyAmount = 10000;
 
         API.Instance.DataWrapper.LocalData.ResetAccountsPercentTo(50, 40, 10, API.Instance.DataWrapper.LocalData.CurrencyAmount);
-        
-	}
+        API.Instance.DataWrapper.LocalData.Refresh();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -59,5 +55,10 @@ public class ConcreteModel : MonoBehaviour
     public void TestReadXml()
     {
         API.Instance.DataWrapper.LocalData.Refresh();
+    }
+
+    public void SetLastAccountClickedIndex(int index)
+    {
+        API.Instance.Logic.lastAccountPanelIndex = index;
     }
 }

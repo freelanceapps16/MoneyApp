@@ -148,9 +148,17 @@ public class Plan1BusinessLogic
 
     Plan1DataWrapper dataRef = null;
 
+    public int lastAccountPanelIndex;//0=necessary,1=next...
+
     public Plan1BusinessLogic(ref Plan1DataWrapper dataRef)
     {
         this.dataRef = dataRef;
+    }
+
+    public int NextTransactionID()
+    {
+        dataRef.LocalData.LastTransactionID++;
+        return dataRef.LocalData.LastTransactionID;
     }
 
 }
