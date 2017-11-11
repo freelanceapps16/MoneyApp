@@ -4,22 +4,44 @@ using System.Collections;
 //TEMPORARY FOR TEST PURPOSE :
 using AppXmlCommon;
 
+//Singleton for the Application Programming Interface of the model
+public class API
+{
+    private static Plan1ModelWrapper instance = null;
+
+    public API()
+    {
+    }
+
+    public static Plan1ModelWrapper Instance
+    {
+        get
+        {
+            if(null == instance)
+            {
+                string xmlLocation = System.IO.Path.Combine(Application.streamingAssetsPath, "User1Data.xml");
+                instance = new Plan1ModelWrapper(PreferedDataProvider.XmlDataProvider, xmlLocation);
+            }
+
+            return instance;
+        }
+    }
+
+}
+
 public class ConcreteModel : MonoBehaviour
 {
-    public Plan1ModelWrapper API = null;
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         string xmlLocation = System.IO.Path.Combine(Application.streamingAssetsPath, "User1Data.xml");
-        API = new Plan1ModelWrapper(PreferedDataProvider.XmlDataProvider, xmlLocation);
 
         
 
-        API.DataWrapper.LocalData.CurrencyName = "Coco";
-        API.DataWrapper.LocalData.CurrencyAmount = 10000;
+        API.Instance.DataWrapper.LocalData.CurrencyName = "Coco";
+        API.Instance.DataWrapper.LocalData.CurrencyAmount = 10000;
 
-        API.DataWrapper.LocalData.ResetAccountsPercentTo(50, 40, 10, API.DataWrapper.LocalData.CurrencyAmount);
+        API.Instance.DataWrapper.LocalData.ResetAccountsPercentTo(50, 40, 10, API.Instance.DataWrapper.LocalData.CurrencyAmount);
         
 	}
 	
@@ -31,11 +53,11 @@ public class ConcreteModel : MonoBehaviour
 
     public void TestWriteXml()
     {
-        API.DataWrapper.LocalData.Save();
+        API.Instance.DataWrapper.LocalData.Save();
     }
 
     public void TestReadXml()
     {
-        API.DataWrapper.LocalData.Refresh();
+        API.Instance.DataWrapper.LocalData.Refresh();
     }
 }
