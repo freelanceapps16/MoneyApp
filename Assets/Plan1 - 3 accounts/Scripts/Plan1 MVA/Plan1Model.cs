@@ -60,7 +60,8 @@ public class Plan1XmlData : Plan1Data
     {
         CurrencyName = xData.currencyName;
         CurrencyAmount = xData.currencyAmount;
-        
+        LastTransactionID = xData.lastTransactionID;
+
         if(xData.accounts.Count == 4)
         {
             NecesarryAccount.ResetToValueOf(xData.accounts[0]);
@@ -74,36 +75,41 @@ public class Plan1XmlData : Plan1Data
     //To put data in the MainXmlData object,from our class
     private void InternalDataToXml()
     {
+        //We cannot pass "this" as reference parameter so we use a method described above
+
         xData.currencyName = CurrencyName;
         xData.currencyAmount = CurrencyAmount;
+        xData.lastTransactionID = LastTransactionID;
+        xData.accounts.Clear();
 
-        XmlAccount testAcc = new XmlAccount();
-        
-        XmlTransaction testTrans = new XmlTransaction();
-        testTrans.amount = 1;
-        testTrans.description = "NO_DESCRIPTION";
-        testTrans.transactionType = "none";
-        testTrans.id = 345127;
-
-        testAcc.transactions.Add(testTrans);
-        testAcc.transactions.Add(testTrans);
-
-        xData.accounts.Add(testAcc);
-        xData.accounts.Add(testAcc);
-        xData.accounts.Add(testAcc);
-
-        //testAcc.transactions.Clear();
-        xData.accounts.Add(testAcc);
+        xData.accounts.Add(XmlAccountFromPlan1Account(NecesarryAccount));
+        xData.accounts.Add(XmlAccountFromPlan1Account(ShoppingsAccount));
+        xData.accounts.Add(XmlAccountFromPlan1Account(CirculationAccount));
+        xData.accounts.Add(XmlAccountFromPlan1Account(AllAccounts));
     }
 
-    public void XmlAccountToPlan1Account(XmlAccount xAccount, ref Plan1Account plan1Account)
+    public XmlAccount XmlAccountFromPlan1Account(Plan1Account account)
     {
+        XmlAccount xAccount = new XmlAccount();
 
-    }
+        xAccount.accountMoney = account.AccountMoney;
+        xAccount.accountPercent = account.AccountPercent;
 
-    public void Plan1AccountToXmlAccount(Plan1Account plan1Account, ref XmlAccount xAccount)
-    {
+        foreach(Transaction tr in account.Transactions)
+        {
+            XmlTransaction tmpTrans = new XmlTransaction();
 
+            tmpTrans.amount = tr.Amount;
+            tmpTrans.description = tr.Description;
+            tmpTrans.transactionType = tr.TransactionType;
+            tmpTrans.dateTime = Transaction.DateTimeSecondsFromEpochFor(tr.DateTime);
+            tmpTrans.id = tr.ID;
+
+            xAccount.transactions.Add(tmpTrans);
+        }
+
+
+        return xAccount;
     }
 
 }

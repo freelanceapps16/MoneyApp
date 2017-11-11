@@ -98,6 +98,12 @@ public class Transaction
     {
         return epoch.AddSeconds(unixTime);
     }
+
+    public static long DateTimeSecondsFromEpochFor(DateTime value)
+    {
+        return (long)(value.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+    }
+
 }
 
 /// <summary>
@@ -186,6 +192,7 @@ public class Plan1Account : Account
     {
         AccountMoney = xAccount.accountMoney;
         AccountPercent = xAccount.accountPercent;
+        
 
         Transactions.Clear();
         List<Transaction> tmpTransactions = new List<Transaction>();
@@ -227,7 +234,6 @@ public class Plan1Data
     string currencyName;
     float currencyAmount;
     int lastTransactionID = 0;
-
     #region Properties for private variables
 
     public Plan1Account NecesarryAccount
