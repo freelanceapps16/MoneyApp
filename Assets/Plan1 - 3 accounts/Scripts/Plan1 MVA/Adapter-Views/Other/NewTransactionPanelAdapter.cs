@@ -17,7 +17,17 @@ public class NewTransactionPanelAdapter : MonoBehaviour
 
     public void AddTransaction()
     {
-        Transaction tr = new Transaction("spending",0.0f);
+        Transaction tr = new Transaction("none",0.0f);
+
+        switch (API.Instance.Logic.lastAccountPanelIndex)
+        {
+            case 0: { tr.TransactionType = "spending"; } break;
+            case 1: { tr.TransactionType = "spending"; } break;
+            case 2: { tr.TransactionType = "spending"; } break;
+            case 3: { tr.TransactionType = "income"; } break;
+
+            default: { /*DO NOTHING*/} break;
+        }
 
         //Transaction type is set from parametrized constructor
         //DateTime is set from constructor
@@ -34,7 +44,7 @@ public class NewTransactionPanelAdapter : MonoBehaviour
             case 0: { API.Instance.DataWrapper.LocalData.NecesarryAccount.Transactions.Add(tr); } break;
             case 1: { API.Instance.DataWrapper.LocalData.ShoppingsAccount.Transactions.Add(tr); } break;
             case 2: { API.Instance.DataWrapper.LocalData.CirculationAccount.Transactions.Add(tr); } break;
-            case 3: { API.Instance.DataWrapper.LocalData.AllAccounts.Transactions.Add(tr); } break;
+            case 3: { API.Instance.DataWrapper.LocalData.IncomeAccount.Transactions.Add(tr); } break;
 
             default: { /*DO NOTHING*/} break;
         }

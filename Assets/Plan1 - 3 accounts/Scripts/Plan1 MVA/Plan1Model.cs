@@ -67,7 +67,7 @@ public class Plan1XmlData : Plan1Data
             NecesarryAccount.ResetToValueOf(xData.accounts[0]);
             ShoppingsAccount.ResetToValueOf(xData.accounts[1]);
             CirculationAccount.ResetToValueOf(xData.accounts[2]);
-            AllAccounts.ResetToValueOf(xData.accounts[3]);
+            IncomeAccount.ResetToValueOf(xData.accounts[3]);
 
         }
     }
@@ -85,7 +85,7 @@ public class Plan1XmlData : Plan1Data
         xData.accounts.Add(XmlAccountFromPlan1Account(NecesarryAccount));
         xData.accounts.Add(XmlAccountFromPlan1Account(ShoppingsAccount));
         xData.accounts.Add(XmlAccountFromPlan1Account(CirculationAccount));
-        xData.accounts.Add(XmlAccountFromPlan1Account(AllAccounts));
+        xData.accounts.Add(XmlAccountFromPlan1Account(IncomeAccount));
     }
 
     public XmlAccount XmlAccountFromPlan1Account(Plan1Account account)

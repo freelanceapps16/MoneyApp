@@ -229,7 +229,7 @@ public class Plan1Data
     Plan1Account necesarryAccount = null;
     Plan1Account shoppingsAccount = null;
     Plan1Account circulationAccount = null;
-    Plan1Account allAccounts = null;
+    Plan1Account incomeAccount = null;
 
     string currencyName;
     float currencyAmount;
@@ -251,9 +251,9 @@ public class Plan1Data
         get { return circulationAccount; }
     }
 
-    public Plan1Account AllAccounts
+    public Plan1Account IncomeAccount
     {
-        get { return allAccounts; }
+        get { return incomeAccount; }
     }
 
     public string CurrencyName
@@ -318,7 +318,7 @@ public class Plan1Data
         necesarryAccount = new Plan1Account(0, 0);
         shoppingsAccount = new Plan1Account(0, 0);
         circulationAccount = new Plan1Account(0, 0);
-        allAccounts = new Plan1Account(0, 0);
+        incomeAccount = new Plan1Account(0, 0);
     }
 
     public void ResetAccountsPercentTo(int percent1, int percent2, int percent3, float totalAmount)
@@ -328,7 +328,7 @@ public class Plan1Data
         necesarryAccount.ResetTo(percent1, currencyAmount);
         shoppingsAccount.ResetTo(percent2, currencyAmount);
         circulationAccount.ResetTo(percent3, currencyAmount);
-        allAccounts.ResetTo(100, currencyAmount);
+        incomeAccount.ResetTo(100, currencyAmount);
     }
 
     
