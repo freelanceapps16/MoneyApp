@@ -19,7 +19,7 @@ public class API
         {
             if(null == instance)
             {
-                string xmlLocation = System.IO.Path.Combine(Application.streamingAssetsPath, "User1Data.xml");
+                string xmlLocation = System.IO.Path.Combine(Application.persistentDataPath, "User1Data.xml");
                 instance = new Plan1ModelWrapper(PreferedDataProvider.XmlDataProvider, xmlLocation);
             }
 
