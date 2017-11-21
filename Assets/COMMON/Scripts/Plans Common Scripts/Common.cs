@@ -154,7 +154,7 @@ public class Account
         set
         {
             if (value > 0)
-                accountMoney = value;
+                accountPercent = value;
         }
     }
 
