@@ -10,8 +10,11 @@ public class Plan1MainView : MonoBehaviour
     public Text futureSpendingsCash;
     public Text monthlyIncomeCash;
 
+    public Text monthlyTotalCash;
+
     private bool updateFinished;
     private bool fastLoadedAtStartup;
+
     void Start()
     {
         updateFinished = false;
@@ -32,8 +35,6 @@ public class Plan1MainView : MonoBehaviour
     {
         string startString = "Cash : ";
 
-
-
         necessarySpendingsCash.text = startString
             + (API.Instance.DataWrapper.LocalData.NecesarryAccount.AccountMoney - 
             NecessarySpendingsCashThisMonth()).ToString()
@@ -46,8 +47,9 @@ public class Plan1MainView : MonoBehaviour
             + (API.Instance.DataWrapper.LocalData.CirculationAccount.AccountMoney -
             FutureSpendingsCashThisMonth()).ToString()
             + "/" + API.Instance.DataWrapper.LocalData.CirculationAccount.AccountMoney.ToString();
-        monthlyIncomeCash.text = startString
-            + IncomeCashThisMonth().ToString();
+        monthlyIncomeCash.text = startString + IncomeCashThisMonth().ToString();
+
+        monthlyTotalCash.text = "\nTotal cash : " + API.Instance.DataWrapper.LocalData.CurrencyAmount.ToString();
 
         if (!fastLoadedAtStartup)
         {

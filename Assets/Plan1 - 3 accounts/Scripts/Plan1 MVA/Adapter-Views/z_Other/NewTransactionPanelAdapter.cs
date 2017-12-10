@@ -49,6 +49,11 @@ public class NewTransactionPanelAdapter : MonoBehaviour
             default: { /*DO NOTHING*/} break;
         }
 
+        if(API.Instance.Logic.lastAccountPanelIndex == 3)
+        {//income
+            API.Instance.DataWrapper.LocalData.IncomeAccount.AccountMoney += tr.Amount;
+        }
+
         API.Instance.DataWrapper.LocalData.Save();
     }
 

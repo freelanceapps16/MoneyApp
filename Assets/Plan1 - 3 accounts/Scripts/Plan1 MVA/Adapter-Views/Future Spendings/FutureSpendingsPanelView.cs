@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System;
 
-public class NecessarySpendingsView : MonoBehaviour {
+public class FutureSpendingsPanelView : MonoBehaviour {
 
     public Text currentMoneyText;
     public Text totalMoneyText;
@@ -11,27 +11,27 @@ public class NecessarySpendingsView : MonoBehaviour {
 
     private bool updateFinished;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         updateFinished = false;
-        StartCoroutine(UpdateNecessarySpendingsView());
+        StartCoroutine(UpdateFutureSpendingsView());
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Update()
+    {
         if (updateFinished)
         {
             updateFinished = false;
-            StartCoroutine(UpdateNecessarySpendingsView());
+            StartCoroutine(UpdateFutureSpendingsView());
         }
     }
 
-    IEnumerator UpdateNecessarySpendingsView()
+    IEnumerator UpdateFutureSpendingsView()
     {
-        float moneySpentThisMonth = NecessarySpendingsCashThisMonth();
-        float totalMoneyThisMonth = API.Instance.DataWrapper.LocalData.NecesarryAccount.AccountMoney;
+        float moneySpentThisMonth = FutureSpendingsCashThisMonth();
+        float totalMoneyThisMonth = API.Instance.DataWrapper.LocalData.CirculationAccount.AccountMoney;
         string currencyName = API.Instance.DataWrapper.LocalData.CurrencyName;
-
         int daysLeft = 0;
 
         currentMoneyText.text = "Money left this month : " + (totalMoneyThisMonth - moneySpentThisMonth).ToString() + " " + currencyName;
@@ -43,12 +43,12 @@ public class NecessarySpendingsView : MonoBehaviour {
         yield return null;
     }
 
-    private float NecessarySpendingsCashThisMonth()
+    private float FutureSpendingsCashThisMonth()
     {
         float total = 0.0f;
         int currentMonth = DateTime.Now.Month;
 
-        foreach (Transaction tr in API.Instance.DataWrapper.LocalData.NecesarryAccount.Transactions)
+        foreach (Transaction tr in API.Instance.DataWrapper.LocalData.CirculationAccount.Transactions)
         {
             if (tr.DateTime.Month == currentMonth)
                 total += tr.Amount;
@@ -56,5 +56,4 @@ public class NecessarySpendingsView : MonoBehaviour {
 
         return total;
     }
-
 }
