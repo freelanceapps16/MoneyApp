@@ -51,10 +51,28 @@ public class NewTransactionPanelAdapter : MonoBehaviour
 
         if(API.Instance.Logic.lastAccountPanelIndex == 3)
         {//income
-            API.Instance.DataWrapper.LocalData.IncomeAccount.AccountMoney += tr.Amount;
+            AddIncomeAmount(tr.Amount);
         }
 
         API.Instance.DataWrapper.LocalData.Save();
+    }
+
+    private void AddIncomeAmount(float amount)
+    {
+        API.Instance.DataWrapper.LocalData.IncomeAccount.AccountMoney += amount;
+
+        float totalfirst2 = 0;
+        float accountAmount = 0;
+
+        accountAmount = (amount / 100) * API.Instance.DataWrapper.LocalData.NecesarryAccount.AccountPercent;
+        API.Instance.DataWrapper.LocalData.NecesarryAccount.AccountMoney += accountAmount;
+        totalfirst2 += accountAmount;
+
+        accountAmount = (amount / 100) * API.Instance.DataWrapper.LocalData.ShoppingsAccount.AccountPercent;
+        API.Instance.DataWrapper.LocalData.ShoppingsAccount.AccountMoney += accountAmount;
+        totalfirst2 += accountAmount;
+
+        API.Instance.DataWrapper.LocalData.CirculationAccount.AccountMoney += (amount - totalfirst2);//to avoid float-errors
     }
 
 }
