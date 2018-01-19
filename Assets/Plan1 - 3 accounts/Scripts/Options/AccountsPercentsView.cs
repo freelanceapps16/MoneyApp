@@ -9,6 +9,10 @@ public class AccountsPercentsView : MonoBehaviour {
     public Slider slider2;
     public Slider slider3;
 
+    public Text percentValueDescriptor1;
+    public Text percentValueDescriptor2;
+    public Text percentValueDescriptor3;
+
     private bool reachedMaximmum1;
     private bool reachedMaximmum2;
     private bool reachedMaximmum3;
@@ -17,9 +21,7 @@ public class AccountsPercentsView : MonoBehaviour {
     private float oldValue2;
     private float oldValue3;
 
-    public Text percentValueDescriptor1;
-    public Text percentValueDescriptor2;
-    public Text percentValueDescriptor3;
+    private bool usedFileValues;
 
     // Use this for initialization
     void Start () {
@@ -27,11 +29,15 @@ public class AccountsPercentsView : MonoBehaviour {
         reachedMaximmum2 = false;
         reachedMaximmum3 = false;
 
+        Slider1ValueChanged();//If all 3 values are zero(at the beginning),sets the values to 1-98-1
+
+        slider1.value = API.Instance.DataWrapper.LocalData.NecesarryAccount.AccountPercent;
+        slider2.value = API.Instance.DataWrapper.LocalData.ShoppingsAccount.AccountPercent;
+        slider3.value = API.Instance.DataWrapper.LocalData.CirculationAccount.AccountPercent;
+
         oldValue1 = slider1.value;
         oldValue2 = slider2.value;
         oldValue3 = slider3.value;
-
-        Slider1ValueChanged();//If all 3 values are zero(at the beginning),sets the values to 1-98-1
 
         RecalculateSlidersValues();
     }
@@ -119,6 +125,13 @@ public class AccountsPercentsView : MonoBehaviour {
 
             if(value > 98)
             {
+                if(index == 1)
+                {
+                    correctedValue = 98;
+                    slider2.value = 1;
+                    slider3.value = 1;
+                }
+
                 if (index == 2)
                     correctedValue = 100 - slider3.value - 1;
                 else

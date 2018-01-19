@@ -17,6 +17,7 @@ public class AccountsPercentsAdapter : MonoBehaviour {
         API.Instance.DataWrapper.LocalData.NecesarryAccount.AccountPercent = (int)slider1.value;
         API.Instance.DataWrapper.LocalData.ShoppingsAccount.AccountPercent = (int)slider2.value;
         API.Instance.DataWrapper.LocalData.CirculationAccount.AccountPercent = (int)slider3.value;
+        API.Instance.DataWrapper.LocalData.Save();
     }
 
 }
