@@ -55,6 +55,9 @@ public class NewTransactionPanelAdapter : MonoBehaviour
         }
 
         API.Instance.DataWrapper.LocalData.Save();
+
+        viewReference.transactionAmountText.text = "";
+        viewReference.transactionDescriptionText.text = "";
     }
 
     private void AddIncomeAmount(float amount)

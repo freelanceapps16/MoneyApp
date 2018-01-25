@@ -49,7 +49,7 @@ public class Plan1MainView : MonoBehaviour
             + "/" + API.Instance.DataWrapper.LocalData.CirculationAccount.AccountMoney.ToString();
         monthlyIncomeCash.text = startString + IncomeCashThisMonth().ToString();
 
-        monthlyTotalCash.text = "\nTotal cash : " + API.Instance.DataWrapper.LocalData.CurrencyAmount.ToString();
+        monthlyTotalCash.text = "\nPast cash : " + API.Instance.DataWrapper.LocalData.CurrencyAmount.ToString();
 
         if (!fastLoadedAtStartup)
         {
